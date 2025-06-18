@@ -12,19 +12,19 @@
 
             while (playOn)
             {
-                string goal = makeGoal();
+                string goal = makeGoal(); //ska absolut inte heta goal, oklart namn, targetNumber
 
 
-                Console.WriteLine("New game:\n");
+                Console.WriteLine("New game:\n"); //Controller
                 //comment out or remove next line to play real games!
                 Console.WriteLine("For practice, number is: " + goal + "\n");
                 string guess = Console.ReadLine();
 
-                int nGuess = 1;
-                string bbcc = checkBC(goal, guess);
+                int nGuess = 1; //1 blir magisk siffra
+                string bbcc = checkBC(goal, guess); //ändra namnet på bbcc, väldigt oklart
                 Console.WriteLine(bbcc + "\n");
-                while (bbcc != "BBBB,")
-                {
+                while (bbcc != "BBBB,") //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
+                { //Byta ut while mot dowhile
                     nGuess++;
                     guess = Console.ReadLine();
                     Console.WriteLine(guess + "\n");
@@ -45,10 +45,12 @@
         }
         static string makeGoal() //Bryt ner den här metoden till 2 olika metoder, en som skapar målsiffran/strängen och den 
                                  //andra metoden som kollar om alla siffror är unika
+
+
         {
             Random randomGenerator = new Random();
             string goal = ""; //ändra namn och tilldela string.Empty?
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++) //4 är en magisk siffra
             {
                 int random = randomGenerator.Next(10);
                 string randomDigit = "" + random; //Göra en metod som heter "CreateRandomNumber" och parse-a det till en sträng
@@ -91,13 +93,13 @@
         {
             //byt namngivning input mot streamreader
             //Ha using, så att den kan dispose-a senare
-            StreamReader input = new StreamReader("result.txt"); //Kolla varför den inte sparar och hur man kan spara
+            StreamReader input = new StreamReader("result.txt"); //Byta namn till textStream eller fileStream
             List<PlayerData> results = new List<PlayerData>(); //playerDatas ska det heta
             string line;
             //Kolla om den här faktiskt blir null eller string empty
             while ((line = input.ReadLine()) != null) //Gör en till metod som läser ifall användare har skrivit något och inte lämnat det till null
             {
-                string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None); //Vad fuck gör den här
+                string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
                 string name = nameAndScore[0];
                 int guesses = Convert.ToInt32(nameAndScore[1]);
                 PlayerData pd = new PlayerData(name, guesses);
@@ -123,7 +125,7 @@
         }
     }
 
-    class PlayerData
+    class PlayerData //Ska metoderna i playerdata brytas ut eller tillhör de playerdata? kolla med chat
     {
         public string Name { get; private set; }
         public int NGames { get; private set; } //NumberOfGames? Eller vad är det här?
@@ -149,7 +151,7 @@
         }
 
 
-        public override bool Equals(Object p) //Ska man ta bort?
+        public override bool Equals(Object p)
         {
             return Name.Equals(((PlayerData)p).Name);
         }
