@@ -28,8 +28,8 @@ public class AppController
                                                      //comment out or remove next line to play real games!
             _inputOutput.WriteOutput("For practice, number is: " + targetNumber + "\n");
             string playerGuess = _inputOutput.ReadInput();
-
-            int nGuess = 1; //1 blir magisk siffra
+          
+            int nGuess = 1; //1 blir magisk siffra - numberOfGuesses
             string bullsAndCowsResult = Program.CheckScore(targetNumber, playerGuess); //ändra namnet på bbcc, väldigt oklart
             _inputOutput.WriteOutput(bullsAndCowsResult + "\n");
             while (bullsAndCowsResult != "BBBB,") //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
