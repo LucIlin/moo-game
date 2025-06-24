@@ -13,30 +13,30 @@
 
         {
             Random randomGenerator = new Random();
-            string goal = ""; //ändra namn och tilldela string.Empty?
+            string targetNumber = ""; //ändra namn och tilldela string.Empty?
             for (int i = 0; i < 4; i++) //4 är en magisk siffra
             {
-                int random = randomGenerator.Next(10);
-                string randomDigit = "" + random; //Göra en metod som heter "CreateRandomNumber" och parse-a det till en sträng
-                while (goal.Contains(randomDigit))
+                int randomNumber = randomGenerator.Next(10);
+                string randomDigit = "" + randomNumber; //Göra en metod som heter "CreateRandomNumber" och parse-a det till en sträng
+                while (targetNumber.Contains(randomDigit))
                 {
-                    random = randomGenerator.Next(10);
-                    randomDigit = "" + random;
+                    randomNumber = randomGenerator.Next(10);
+                    randomDigit = "" + randomNumber;
                 }
-                goal = goal + randomDigit;
+                targetNumber = targetNumber + randomDigit;
             }
-            return goal;
+            return targetNumber;
         }
 
-        public static string checkBC(string goal, string guess) //CheckResult eller checkguess iställer för BC, BC är oklart.
+        public static string checkBC(string targetNumber, string playerGuess) //CheckResult eller checkguess iställer för BC, BC är oklart.
         {
             int cows = 0, bulls = 0;
-            guess += "    ";     // if player entered less than 4 chars
+            playerGuess += "    ";     // if player entered less than 4 chars
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++) //Implementera felhantering på längden av gissningen, om den är inom "range"
                 {
-                    if (goal[i] == guess[j])
+                    if (targetNumber[i] == playerGuess[j])
                     {
                         if (i == j)
                         {
@@ -53,37 +53,37 @@
         }
 
         //Kasta in scoreboard till en egen klass, även skapa upp ett interface ifall man vill byta ut streamreader/text file writer till databas eller något
-        public static void showTopList() //Byt namn till Scoreboard
+        public static void Scoreboard() //Byt namn till Scoreboard
         {
             //byt namngivning input mot streamreader
             //Ha using, så att den kan dispose-a senare
-            StreamReader input = new StreamReader("result.txt"); //Byta namn till textStream eller fileStream
-            List<PlayerData> results = new List<PlayerData>(); //playerDatas ska det heta
+            StreamReader fileContent = new StreamReader("result.txt"); //Byta namn till textStream eller fileStream
+            List<PlayerData> playerDatas = new List<PlayerData>(); //playerDatas ska det heta
             string line;
             //Kolla om den här faktiskt blir null eller string empty
-            while ((line = input.ReadLine()) != null) //Gör en till metod som läser ifall användare har skrivit något och inte lämnat det till null
+            while ((line = fileContent.ReadLine()) != null) //Gör en till metod som läser ifall användare har skrivit något och inte lämnat det till null
             {
                 string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
                 string name = nameAndScore[0];
                 int guesses = Convert.ToInt32(nameAndScore[1]);
                 PlayerData pd = new PlayerData(name, guesses);
-                int pos = results.IndexOf(pd);
+                int pos = playerDatas.IndexOf(pd);
                 if (pos < 0)
                 {
-                    results.Add(pd);
+                    playerDatas.Add(pd);
                 }
                 else
                 {
-                    results[pos].Update(guesses);
+                    playerDatas[pos].Update(guesses);
                 }
             }
-            results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
+            playerDatas.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
             Console.WriteLine("Player   games average");
-            foreach (PlayerData p in results)
+            foreach (PlayerData p in playerDatas)
             {
                 Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.NGames, p.Average()));
             }
-            input.Close();
+            fileContent.Close();
         }
     }
 }
