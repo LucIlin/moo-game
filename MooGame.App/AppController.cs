@@ -13,8 +13,6 @@ public class AppController
     {
         _inputOutput = inputOutput;
     }
-
-
     public void Run()
     {
         bool isRunning = true; //Ska vara isRunning
@@ -32,14 +30,14 @@ public class AppController
             string playerGuess = _inputOutput.ReadInput();
 
             int nGuess = 1; //1 blir magisk siffra
-            string bullsAndCowsResult = Program.checkBC(targetNumber, playerGuess); //ändra namnet på bbcc, väldigt oklart
+            string bullsAndCowsResult = Program.CheckScore(targetNumber, playerGuess); //ändra namnet på bbcc, väldigt oklart
             _inputOutput.WriteOutput(bullsAndCowsResult + "\n");
             while (bullsAndCowsResult != "BBBB,") //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
             { //Byta ut while mot dowhile
                 nGuess++;
                 playerGuess = _inputOutput.ReadInput();
                 _inputOutput.WriteOutput(playerGuess + "\n");
-                bullsAndCowsResult = Program.checkBC(targetNumber, playerGuess);
+                bullsAndCowsResult = Program.CheckScore(targetNumber, playerGuess);
                 _inputOutput.WriteOutput(bullsAndCowsResult + "\n");
             }
             StreamWriter output = new StreamWriter("result.txt", append: true);
