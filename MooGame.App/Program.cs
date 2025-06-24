@@ -5,44 +5,9 @@
 
         public static void Main(string[] args)
         {
-            bool isRunning = true; //Ska vara isPlaying eller isRunning
-            Console.WriteLine("Enter your user name:\n");
-            string name = Console.ReadLine(); //userName eller playerName
-
-            while (isRunning)
-            {
-                string goal = makeGoal(); //ska absolut inte heta goal, oklart namn, targetNumber
-
-
-                Console.WriteLine("New game:\n"); //Controller
-                                                  //comment out or remove next line to play real games!
-                Console.WriteLine("For practice, number is: " + goal + "\n");
-                string guess = Console.ReadLine();
-
-                int nGuess = 1; //1 blir magisk siffra
-                string bbcc = checkBC(goal, guess); //ändra namnet på bbcc, väldigt oklart
-                Console.WriteLine(bbcc + "\n");
-                while (bbcc != "BBBB,") //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
-                { //Byta ut while mot dowhile
-                    nGuess++;
-                    guess = Console.ReadLine();
-                    Console.WriteLine(guess + "\n");
-                    bbcc = checkBC(goal, guess);
-                    Console.WriteLine(bbcc + "\n");
-                }
-                StreamWriter output = new StreamWriter("result.txt", append: true);
-                output.WriteLine(name + "#&#" + nGuess);
-                output.Close();
-                showTopList();
-                Console.WriteLine("Correct, it took " + nGuess + " guesses\nContinue?");
-                string answer = Console.ReadLine();
-                if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
-                {
-                    isRunning = false;
-                }
-            }
+            
         }
-        static string makeGoal() //Bryt ner den här metoden till 2 olika metoder, en som skapar målsiffran/strängen och den 
+        public static string makeGoal() //Bryt ner den här metoden till 2 olika metoder, en som skapar målsiffran/strängen och den 
                                  //andra metoden som kollar om alla siffror är unika
 
 
@@ -63,7 +28,7 @@
             return goal;
         }
 
-        static string checkBC(string goal, string guess) //CheckResult eller checkguess iställer för BC, BC är oklart.
+        public static string checkBC(string goal, string guess) //CheckResult eller checkguess iställer för BC, BC är oklart.
         {
             int cows = 0, bulls = 0;
             guess += "    ";     // if player entered less than 4 chars
@@ -88,7 +53,7 @@
         }
 
         //Kasta in scoreboard till en egen klass, även skapa upp ett interface ifall man vill byta ut streamreader/text file writer till databas eller något
-        static void showTopList() //Byt namn till Scoreboard
+        public static void showTopList() //Byt namn till Scoreboard
         {
             //byt namngivning input mot streamreader
             //Ha using, så att den kan dispose-a senare
