@@ -9,9 +9,11 @@ namespace MooGame.App;
 public class AppController 
 {
     private readonly IInputOutput _inputOutput;
-    public AppController(IInputOutput inputOutput)
+    private readonly INumberGenerator _numberGenerator;
+    public AppController(IInputOutput inputOutput, INumberGenerator numberGenerator)
     {
         _inputOutput = inputOutput;
+        _numberGenerator = numberGenerator;
     }
     public void Run()
     {
@@ -21,7 +23,7 @@ public class AppController
 
         while (isRunning)
         {
-            string targetNumber = Program.makeGoal(); //ska absolut inte heta goal, oklart namn, targetNumber
+            string targetNumber = _numberGenerator.GenerateNumber(); //ska absolut inte heta goal, oklart namn, targetNumber
 
 
             _inputOutput.WriteOutput("New game:\n"); //Controller
@@ -37,16 +39,16 @@ public class AppController
                 nGuess++;
                 playerGuess = _inputOutput.ReadInput();
                 _inputOutput.WriteOutput(playerGuess + "\n");
-                bullsAndCowsResult = Program.CheckScore(targetNumber, playerGuess);
+                bullsAndCowsResult = Program.CheckScore(targetNumber, playerGuess); //Måste fixas
                 _inputOutput.WriteOutput(bullsAndCowsResult + "\n");
             }
-            StreamWriter output = new StreamWriter("result.txt", append: true);
-            output.WriteLine(playerName + "#&#" + nGuess);
-            output.Close();
-            Program.Scoreboard();
+            //StreamWriter output = new StreamWriter("result.txt", append: true); //måste abstraheras bort
+            //output.WriteLine(playerName + "#&#" + nGuess);
+            //output.Close();
+            /*Program.Scoreboard();*/ //måste fixas
             _inputOutput.WriteOutput("Correct, it took " + nGuess + " guesses\nContinue?");
             string answer = _inputOutput.ReadInput();
-            if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
+            if (answer != null && answer != "" && answer.Substring(0, 1) == "n")    
             {
                 isRunning = false;
             }
