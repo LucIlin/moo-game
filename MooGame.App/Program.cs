@@ -1,4 +1,5 @@
-﻿namespace MooGame;
+﻿using MooGame.App;
+namespace MooGame;
 
 class Program //Program //testtest
 {
@@ -9,29 +10,7 @@ class Program //Program //testtest
     }
 
 
-    public static string CheckScore(string targetNumber, string playerGuess) //CheckResult eller checkguess iställer för BC, BC är oklart.
-    {
-        int cows = 0, bulls = 0;
-        playerGuess += "    ";     // if player entered less than 4 chars
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++) //Implementera felhantering på längden av gissningen, om den är inom "range"
-            {
-                if (targetNumber[i] == playerGuess[j])
-                {
-                    if (i == j)
-                    {
-                        bulls++;
-                    }
-                    else
-                    {
-                        cows++;
-                    }
-                }
-            }
-        }
-        return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
-    }
+  
 
     //Kasta in scoreboard till en egen klass, även skapa upp ett interface ifall man vill byta ut streamreader/text file writer till databas eller något
     public static void Scoreboard() //Byt namn till Scoreboard
