@@ -32,6 +32,7 @@ public class AppController
             _inputOutput.WriteOutput("New game:\n"); //Controller
                                                      //comment out or remove next line to play real games!
             _inputOutput.WriteOutput("For practice, number is: " + targetNumber + "\n");
+            _inputOutput.WriteOutput("Guess with 4 digits");
 
             string playerGuess = _inputOutput.ReadInput(); //must be 4 characters, not more, not less, must be digits
           
@@ -41,7 +42,7 @@ public class AppController
 
             _inputOutput.WriteOutput(bullsAndCowsResult + "\n");
 
-            while (bullsAndCowsResult != "BBBB,") //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
+            while (bullsAndCowsResult != "BBBB") //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
             { //Byta ut while mot dowhile
                 nGuess++;
                 playerGuess = _inputOutput.ReadInput();
@@ -53,7 +54,7 @@ public class AppController
             //output.WriteLine(playerName + "#&#" + nGuess);
             //output.Close();
             /*Program.Scoreboard();*/ //måste fixas
-            _inputOutput.WriteOutput("Correct, it took " + nGuess + " guesses\nContinue?");
+            _inputOutput.WriteOutput("Correct, it took " + nGuess + " guesses\nContinue? y/n");
             string answer = _inputOutput.ReadInput(); //must be "y" or "n" with small letters and nothing else
             if (answer != null && answer != "" && answer.Substring(0, 1) == "n")    
             {
