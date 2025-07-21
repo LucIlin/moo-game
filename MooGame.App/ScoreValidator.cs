@@ -8,35 +8,7 @@ public class ScoreValidator
     {
 
     }
-    //public string CheckGuess(string targetNumber, string playerGuess)
-    //{
-    //    string bullScore = "BBBB";
-    //    string cowScore = "CCCC";
-
-    //    int cows = 0, bulls = 0;
-    //    //playerGuess += "    ";     // if player entered less than 4 chars
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        for (int j = 0; j < 4; j++) //Implementera felhantering på längden av gissningen, om den är inom "range"
-    //        {
-    //            if (targetNumber[i] == playerGuess[j])
-    //            {
-    //                if (i == j)
-    //                {
-    //                    bulls++;
-    //                }
-    //                else
-    //                {
-    //                    cows++;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    return $"{bullScore.Substring(0, bulls)} {cowScore.Substring(0, cows)}".TrimEnd();
-    //}
-
-
-
+ 
     public string CheckGuess(string targetNumber, string playerGuess)
     {
         if (targetNumber.IsLengthNotFour() || playerGuess.IsLengthNotFour())
@@ -44,48 +16,52 @@ public class ScoreValidator
             throw new ArgumentException("Both numbers must be exactly 4 digits.");
         }
 
-        (int bulls, int cows) = CalculateScore(targetNumber, playerGuess);
+        var score = CalculateScore(targetNumber, playerGuess);
 
-        return Score(bulls, cows);
+        return Score(score.Bulls, score.Cows);
     }
 
-    private string Score(int bulls, int cows)
+    private ScoreResult CalculateScore(string targetNumber, string playerGuess)
     {
-        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
-    }
+        var result = new ScoreResult();
+        var remainingTargetDigits = new List<char>();
+        var remainingGuessDigits = new List<char>();
 
-    private (int, int) CalculateScore(string targetNumber, string playerGuess)
-    {
-        int bulls = 0, cows = 0;
-        var unmatchedTarget = new List<char>();
-        var unmatchedGuess = new List<char>();
-
-        for (int i = 0; i < 4; i++)
+        for (int index = 0; index < 4; index++)
         {
-            if (CompareTargetNumberAndPlayerGuessByIndex(targetNumber, playerGuess, i))
+            if (CompareTargetNumberAndPlayerGuessByIndex(targetNumber, playerGuess, index))
             {
-                bulls++;
+                result.Bulls++;
             }
             else
             {
-                unmatchedTarget.Add(targetNumber[i]);
-                unmatchedGuess.Add(playerGuess[i]);
+                remainingTargetDigits.Add(targetNumber[index]);
+                remainingGuessDigits.Add(playerGuess[index]);
             }
         }
 
-        foreach (char guessChar in unmatchedGuess)
+        foreach (char guessIndex in remainingGuessDigits)
         {
-            if (unmatchedTarget.Remove(guessChar))
-                cows++;
+            if (remainingTargetDigits.Remove(guessIndex))
+                result.Cows++;
         }
 
-        return (bulls, cows);
+        return result;
     }
 
     private bool CompareTargetNumberAndPlayerGuessByIndex(string targetNumber, string playerGuess, int index)
     {
         return targetNumber[index] == playerGuess[index];
     }
+
+    private string Score(int bulls, int cows)
+    {
+        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
+    }
 }
 
-
+public class ScoreResult
+{
+    public int Bulls { get; set; }
+    public int Cows { get; set; }
+}
