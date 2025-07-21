@@ -6,7 +6,8 @@ class Program //Program //testtest
 
     public static void Main(string[] args)
     {
-
+        var controller = new AppController(new ConsoleIO(), new RandomMooNumberGenerator());
+        controller.Run();
     }
 
     //Kasta in scoreboard till en egen klass, även skapa upp ett interface ifall man vill byta ut streamreader/text file writer till databas eller något
