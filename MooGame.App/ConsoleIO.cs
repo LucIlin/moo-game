@@ -2,7 +2,7 @@
 
 namespace MooGame.App;
 
-public class ConsoleIO
+public class ConsoleIO : IInputOutput
 {
     public string ReadInput()
     {
