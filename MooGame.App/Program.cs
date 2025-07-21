@@ -9,9 +9,6 @@ class Program //Program //testtest
 
     }
 
-
-  
-
     //Kasta in scoreboard till en egen klass, även skapa upp ett interface ifall man vill byta ut streamreader/text file writer till databas eller något
     public static void Scoreboard() //Byt namn till Scoreboard
     {
