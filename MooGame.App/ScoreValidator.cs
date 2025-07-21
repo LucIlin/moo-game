@@ -11,14 +11,19 @@ public class ScoreValidator
  
     public string CheckGuess(string targetNumber, string playerGuess)
     {
+        EnsureValidGuessLength(targetNumber, playerGuess); //Kanske ska ta bort hela den metoden eftersom UserHandlerInput sköter det??
+
+        var scoreResult = CalculateScore(targetNumber, playerGuess);
+
+        return Score(scoreResult.Bulls, scoreResult.Cows);
+    }
+
+    private static void EnsureValidGuessLength(string targetNumber, string playerGuess)
+    {
         if (targetNumber.IsLengthNotFour() || playerGuess.IsLengthNotFour())
         {
             throw new ArgumentException("Both numbers must be exactly 4 digits.");
         }
-
-        var score = CalculateScore(targetNumber, playerGuess);
-
-        return Score(score.Bulls, score.Cows);
     }
 
     private ScoreResult CalculateScore(string targetNumber, string playerGuess)
