@@ -1,10 +1,28 @@
-﻿namespace MooGame.App;
+﻿using MooGame.App;
 
-public class ConsoleIO : IInputOutput
+namespace MooGame.App;
+
+public class ConsoleIO
 {
     public string ReadInput()
     {
-        var input = Console.ReadLine()?.Trim().ToLower() ?? string.Empty;
+        bool isValidInput = false;
+        string input  = string.Empty;
+        
+        while (!isValidInput)
+        {
+            input = Console.ReadLine() ?? "";
+            
+            try
+            {
+                isValidInput = UserInputHandler.IsValidChars(input);
+            }
+            catch (ArgumentException e)
+            {
+                WriteOutput("Something went wrong: " + e.Message + "\n Please try again:");
+            }
+        }
+
         return input;
     }
 

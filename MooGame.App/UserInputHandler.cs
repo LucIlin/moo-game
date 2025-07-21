@@ -1,22 +1,24 @@
-﻿namespace MooGame.App;
+﻿using System.Text.RegularExpressions;
 
-//TODO Validate
-public class UserInputHandler : ISanitizer
+namespace MooGame.App;
+
+public static class UserInputHandler
 {
-    private HashSet<string> _validCommands { get; }
-
-    public UserInputHandler(HashSet<string> commands)
-    {
-        _validCommands = commands;
-    }
-    public bool Validate(string input)
+    public static bool IsValidChars(string? input)
     {   
         if (string.IsNullOrEmpty(input)) throw new ArgumentException("Input is Null or Empty");
         
         if (input.Length > 25) throw new ArgumentException("Input length larger than 25 characters.");
         
-        if (!_validCommands.Contains(input)) throw new ArgumentException("Invalid command");
-
+        if (!Regex.IsMatch(input, @"^[a-zA-Z0-9!""#$%&'()*+, \-./:;<=>?@[\\\]^_`{|}~]+$")) throw new ArgumentException("Invalid characters");
+        
         return true;
+    }
+
+    public static bool IsYesNo(string input)
+    {
+        input = input.ToLower();
+
+        return (input is "n" or "y");
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using MooGame.App;
+﻿using MooGame.App;
 
 namespace MooGame.Tests;
 
@@ -9,31 +8,26 @@ namespace MooGame.Tests;
 [TestCategory("UserInputHandlerTests")]
 public class UserInputHandlerTests
 {
-    private static HashSet<string> _mockCommands = new (["y", "n", "0", "1"]);
     
     [TestMethod]
     [DataRow("12345678912345678912123456")]
-    public void Validate_InputIsTooLong_ThrowException(string input)
+    public void IsValidChars_InputIsTooLong_ThrowException(string input)
     {
-        var validator = new UserInputHandler(_mockCommands);
         
-        Assert.ThrowsException<ArgumentException>(() => validator.Validate(input));
+        Assert.ThrowsException<ArgumentException>(() => UserInputHandler.IsValidChars(input));
     }
     
     [TestMethod]
     [DataRow("")]
-    public void Validate_InputIsEmptyString_ThrowException(string input)
+    [DataRow(null)]
+    public void IsValidChars_InputIsEmptyString_ThrowException(string input)
     {
-        var validator = new UserInputHandler(_mockCommands);
-        
-        Assert.ThrowsException<ArgumentException>(() => validator.Validate(input));
+        Assert.ThrowsException<ArgumentException>(() => UserInputHandler.IsValidChars(input));
     }
 
     [TestMethod]
-    public void Validate_NotValidCommand_ThrowException()
+    public void IsValidChars_NotValidChar_ThrowException()
     {
-        var validator = new UserInputHandler(_mockCommands);
-        
-        Assert.ThrowsException<ArgumentException>(() => validator.Validate(""));
+        Assert.ThrowsException<ArgumentException>(() => UserInputHandler.IsValidChars("你"));
     }
 }
