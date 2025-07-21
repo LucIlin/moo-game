@@ -1,4 +1,6 @@
-﻿namespace MooGame.Tests;
+﻿using MooGame.App.Extensions;
+
+namespace MooGame.Tests;
 
 public class ScoreValidator
 {
@@ -37,19 +39,22 @@ public class ScoreValidator
 
     public string CheckGuess(string targetNumber, string playerGuess)
     {
-        if (targetNumber.Length != 4 || playerGuess.Length != 4)
+        if (targetNumber.IsLengthNotFour() || playerGuess.IsLengthNotFour())
+        {
             throw new ArgumentException("Both numbers must be exactly 4 digits.");
+        }
 
         (int bulls, int cows) = CalculateScore(targetNumber, playerGuess);
+
         return Score(bulls, cows);
     }
 
-    private static string Score(int bulls, int cows)
+    private string Score(int bulls, int cows)
     {
         return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
     }
 
-    private static (int, int) CalculateScore(string targetNumber, string playerGuess)
+    private (int, int) CalculateScore(string targetNumber, string playerGuess)
     {
         int bulls = 0, cows = 0;
         var unmatchedTarget = new List<char>();
@@ -77,9 +82,10 @@ public class ScoreValidator
         return (bulls, cows);
     }
 
-    private static bool CompareTargetNumberAndPlayerGuessByIndex(string targetNumber, string playerGuess, int i)
+    private bool CompareTargetNumberAndPlayerGuessByIndex(string targetNumber, string playerGuess, int index)
     {
-        return targetNumber[i] == playerGuess[i];
+        return targetNumber[index] == playerGuess[index];
     }
 }
+
 
