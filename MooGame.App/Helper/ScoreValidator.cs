@@ -1,6 +1,6 @@
 ﻿using MooGame.App.Extensions;
 
-namespace MooGame.Tests;
+namespace MooGame.App.Helper;
 
 public class ScoreValidator
 {
@@ -11,19 +11,10 @@ public class ScoreValidator
  
     public string CheckGuess(string targetNumber, string playerGuess)
     {
-        EnsureValidGuessLength(targetNumber, playerGuess); //Kanske ska ta bort hela den metoden eftersom UserHandlerInput sköter det??
 
         var scoreResult = CalculateScore(targetNumber, playerGuess);
 
         return Score(scoreResult.Bulls, scoreResult.Cows);
-    }
-
-    private static void EnsureValidGuessLength(string targetNumber, string playerGuess)
-    {
-        if (targetNumber.IsLengthNotFour() || playerGuess.IsLengthNotFour())
-        {
-            throw new ArgumentException("Both numbers must be exactly 4 digits.");
-        }
     }
 
     private ScoreResult CalculateScore(string targetNumber, string playerGuess)
@@ -45,9 +36,9 @@ public class ScoreValidator
             }
         }
 
-        foreach (char guessIndex in remainingGuessDigits)
+        foreach (char guessDigit in remainingGuessDigits)
         {
-            if (remainingTargetDigits.Remove(guessIndex))
+            if (remainingTargetDigits.Remove(guessDigit))
                 result.Cows++;
         }
 
