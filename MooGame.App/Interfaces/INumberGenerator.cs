@@ -1,4 +1,4 @@
-﻿namespace MooGame;
+﻿namespace MooGame.App.Interfaces;
 
 public interface INumberGenerator
 {

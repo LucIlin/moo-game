@@ -1,4 +1,6 @@
-﻿namespace MooGame;
+﻿using MooGame.App.Interfaces;
+
+namespace MooGame.App.Helper;
 
 public class RandomMooNumberGenerator : INumberGenerator
 {
