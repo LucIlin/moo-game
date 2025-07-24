@@ -11,7 +11,6 @@ public class ScoreValidator
  
     public string CheckGuess(string targetNumber, string playerGuess)
     {
-
         var scoreResult = CalculateScore(targetNumber, playerGuess);
 
         return Score(scoreResult.Bulls, scoreResult.Cows);
