@@ -1,32 +1,32 @@
-﻿namespace MooGame
+﻿namespace MooGame.App.Model
 {
     class PlayerData //Ska metoderna i playerdata brytas ut eller tillhör de playerdata? kolla med chat
     {
         public string Name { get; private set; }
-        public int NGames { get; private set; } //NumberOfGames? Eller vad är det här?
-        int totalGuess;
+        public int NumberOfGames { get; private set; } //NumberOfGames? Eller vad är det här?
+        int TotalNumberOfGuesses;
 
 
         public PlayerData(string name, int guesses)
         {
-            this.Name = name;
-            NGames = 1;
-            totalGuess = guesses;
+            Name = name;
+            NumberOfGames = 1;
+            TotalNumberOfGuesses = guesses;
         }
 
         public void Update(int guesses) //Bryt ut det här till en egen klass
         {
-            totalGuess += guesses;
-            NGames++;
+            TotalNumberOfGuesses += guesses;
+            NumberOfGames++;
         }
 
         public double Average() //PlayerDataController
         {
-            return (double)totalGuess / NGames;
+            return (double)TotalNumberOfGuesses / NumberOfGames;
         }
 
 
-        public override bool Equals(Object p)
+        public override bool Equals(object p)
         {
             return Name.Equals(((PlayerData)p).Name);
         }
