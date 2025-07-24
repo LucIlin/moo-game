@@ -1,4 +1,6 @@
-﻿namespace MooGame.Tests.Mocks;
+﻿using MooGame.App.Interfaces;
+
+namespace MooGame.Tests.Mocks;
 
 internal class MockNumberGenerator : INumberGenerator
 {
