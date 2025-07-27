@@ -1,8 +1,9 @@
-﻿using MooGame.App;
+﻿using MooGame.App.Helper;
+using MooGame.App.Interfaces;
 
-namespace MooGame.App;
+namespace MooGame.App.View;
 
-public class ConsoleIO
+public class ConsoleIO : IInputOutput
 {
     public string ReadInput()
     {

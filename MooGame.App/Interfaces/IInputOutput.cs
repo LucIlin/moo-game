@@ -1,4 +1,4 @@
-﻿namespace MooGame.App;
+﻿namespace MooGame.App.Interfaces;
 
 public interface IInputOutput
 {

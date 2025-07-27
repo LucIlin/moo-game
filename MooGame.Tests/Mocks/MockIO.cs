@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using MooGame.App;
+using MooGame.App.Interfaces;
 
 namespace MooGame.Tests;
 
@@ -19,6 +19,5 @@ internal class MockIO : IInputOutput
     {
         Outputs.Add(output);
         Debug.WriteLine(output);
-        
     }
 }

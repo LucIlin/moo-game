@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MooGame.App;
+namespace MooGame.App.Helper;
 
 public static class UserInputHandler
 {
@@ -19,6 +19,7 @@ public static class UserInputHandler
     {
         input = input.ToLower();
 
-        return (input is "n" or "y");
+        return input is "n" or "y";
     }
+
 }
