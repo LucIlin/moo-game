@@ -2,23 +2,23 @@
 
 namespace MooGame.App.Helper;
 
-public class ScoreValidator
+public class MooGameScoreValidator
 {
-    public ScoreValidator()
+    public MooGameScoreValidator()
     {
 
     }
  
-    public string CheckGuess(string targetNumber, string playerGuess)
+    public bool CheckGuess(string targetNumber, string playerGuess)
     {
         var scoreResult = CalculateScore(targetNumber, playerGuess);
 
         return Score(scoreResult.Bulls, scoreResult.Cows);
     }
 
-    private ScoreResult CalculateScore(string targetNumber, string playerGuess)
+    private MooScoreResult CalculateScore(string targetNumber, string playerGuess)
     {
-        var result = new ScoreResult();
+        var result = new MooScoreResult();
         var remainingTargetDigits = new List<char>();
         var remainingGuessDigits = new List<char>();
 
@@ -49,13 +49,13 @@ public class ScoreValidator
         return targetNumber[index] == playerGuess[index];
     }
 
-    private string Score(int bulls, int cows)
+    private bool Score(int bulls, int cows)
     {
-        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
+        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}" == "BBBB";
     }
 }
 
-public class ScoreResult
+public class MooScoreResult
 {
     public int Bulls { get; set; }
     public int Cows { get; set; }
