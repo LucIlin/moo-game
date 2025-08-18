@@ -35,4 +35,14 @@ public class Scoreboard
         }
         fileContent.Close();
     }
+
+    public void GetScoreboard()
+    {
+        //StreamWriter output = new StreamWriter("result.txt", append: true); //måste abstraheras bort
+        //output.WriteLine(playerName + "#&#" + nGuess);
+        //output.Close();
+        ///*Program.Scoreboard();*/ //måste fixas
+        ///
+        throw new ArgumentException("not implemented");
+    }
 }
