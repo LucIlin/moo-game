@@ -1,4 +1,5 @@
 ﻿using MooGame.App;
+using MooGame.App.Helper;
 using System.ComponentModel.DataAnnotations;
 namespace MooGame.Tests;
 
@@ -11,7 +12,7 @@ public sealed class ScoreValidatorTests
     public void Test_CheckScore_ResultMatchesScore()
     {
         //Arrange
-        var validator = new ScoreValidator();
+        var validator = new MooGameScoreValidator();
         var targetNumber = "1234";
         var guesses = new List<string>(new[] { "1233", "1243", "1234" });
         var expectedResults = new List<string> { "BBB", "BB CC", "BBBB" };
@@ -29,7 +30,7 @@ public sealed class ScoreValidatorTests
     public void CheckGuess_ReturnsCorrectBullCount_WhenDigitsAreInCorrectPosition()
     {
         // Arrange
-        var validator = new ScoreValidator();
+        var validator = new MooGameScoreValidator();
         var target = "1234";
 
         // Act + Assert
