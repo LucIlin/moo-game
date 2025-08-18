@@ -1,12 +1,18 @@
 ﻿using MooGame.App;
+using MooGame.App.Controller;
+using MooGame.App.Helper;
+using MooGame.App.View;
 namespace MooGame;
 
-class Program //Program //testtest
+public class Program
 {
-
     public static void Main(string[] args)
     {
-        var app = new AppController(new ConsoleIO(), new RandomMooNumberGenerator(), new GameController());
-        app.Run(/*game*/);
+        var io = new ConsoleIO();
+        var numberGenerator = new RandomMooNumberGenerator();
+        var mooGame = new MooGameApp(numberGenerator, io);
+        var app = new AppController(mooGame);
+
+        app.RunApplication();
     }
 }
