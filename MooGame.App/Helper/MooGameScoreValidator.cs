@@ -9,11 +9,18 @@ public class MooGameScoreValidator
 
     }
  
-    public bool CheckGuess(string targetNumber, string playerGuess)
+    public (bool, string) CheckGuess(string targetNumber, string playerGuess)
     {
         var scoreResult = CalculateScore(targetNumber, playerGuess);
 
-        return Score(scoreResult.Bulls, scoreResult.Cows);
+        var resultFromGuess = Score(scoreResult.Bulls, scoreResult.Cows);
+
+        return (resultFromGuess == "BBBB", resultFromGuess);
+    }
+
+    public bool isGuessCorrect(string scoreResult)
+    {
+        return scoreResult == "BBBB";
     }
 
     private MooScoreResult CalculateScore(string targetNumber, string playerGuess)
@@ -49,9 +56,9 @@ public class MooGameScoreValidator
         return targetNumber[index] == playerGuess[index];
     }
 
-    private bool Score(int bulls, int cows)
+    private string Score(int bulls, int cows)
     {
-        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}" == "BBBB";
+        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
     }
 }
 
