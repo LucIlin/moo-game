@@ -6,10 +6,10 @@ namespace MooGame.App.Controller;
 
 public class MooGameController : IGameController
 {
-
     private readonly INumberGenerator _numberGenerator;
     private readonly IInputOutput _inputOutput;
     private readonly MooGameScoreValidator _validator;
+
     const string newLine = "\n";
     const int InitialGuessCount = 1;
 
@@ -23,11 +23,12 @@ public class MooGameController : IGameController
     {
         
         bool isRunning = true;
+
         AskPlayerForName();
 
         string playerName = _inputOutput.ReadInput(); //userName eller playerName //validate so that player name is not bigger than 25char //put this data into PlayerData?
         //check here
-        while (isRunning)
+        do
         {
             string targetNumber = _numberGenerator.GenerateNumber();
             GivePlayerInstructions(targetNumber);
@@ -36,17 +37,18 @@ public class MooGameController : IGameController
                                                            //check here
             int numberOfGuesses = InitialGuessCount; //1 blir magisk siffra
 
-            bool bullsAndCowsResult = _validator.CheckGuess(targetNumber, playerGuess);
+            (bool isGuessCorrect, string result) bullsAndCowsResult = _validator.CheckGuess(targetNumber, playerGuess);
 
-            _inputOutput.WriteOutput(bullsAndCowsResult + newLine);
+            _inputOutput.WriteOutput(bullsAndCowsResult.result + newLine);
 
-            while (bullsAndCowsResult != true) //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
+            while (bullsAndCowsResult.isGuessCorrect != true) //Så länge gissningen inte är lika med targetNumber så körs den, Är inte BBBB en magisk "siffra/ord"
             { //Byta ut while mot do-while
                 numberOfGuesses++;
                 playerGuess = _inputOutput.ReadInput();
                 _inputOutput.WriteOutput(playerGuess + newLine);
                 bullsAndCowsResult = _validator.CheckGuess(targetNumber, playerGuess);
-                _inputOutput.WriteOutput(bullsAndCowsResult + newLine);
+                bool isGuessCorrect = _validator.IsGuessCorrect(bullsAndCowsResult);
+                _inputOutput.WriteOutput(bullsAndCowsResult.result + newLine);
             }
 
             //Scoreboard.GetScoreBoard();
@@ -57,7 +59,13 @@ public class MooGameController : IGameController
             string answer = _inputOutput.ReadInput(); //must be "y" or "n" with small letters and nothing else
 
             isRunning = EndGameIfPlayerDoesNotChooseYes(isRunning, answer);
-        }
+
+        } while (isRunning);
+    }
+
+    private string CreateScore(int bulls, int cows) //namngivningen ska va CreateScore
+    {
+        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
     }
 
     private static bool EndGameIfPlayerDoesNotChooseYes(bool isRunning, string answer)
@@ -78,7 +86,7 @@ public class MooGameController : IGameController
     private void GivePlayerInstructions(string targetNumber)
     {
         _inputOutput.WriteOutput("New game:\n");
-        _inputOutput.WriteOutput("For practice, number is: " + targetNumber + newLine);
+        _inputOutput.WriteOutput("For practice, number is: " + targetNumber + newLine); //Ta bort denna när allt är klart
         _inputOutput.WriteOutput("Guess with 4 digits");
     }
 
