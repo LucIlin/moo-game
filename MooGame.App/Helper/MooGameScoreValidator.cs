@@ -4,23 +4,23 @@ namespace MooGame.App.Helper;
 
 public class MooGameScoreValidator
 {
+    private const string correctResult = "BBBB";
+
     public MooGameScoreValidator()
     {
 
     }
  
-    public (bool, string) CheckGuess(string targetNumber, string playerGuess)
+    public string CheckGuess(string targetNumber, string playerGuess)
     {
         var scoreResult = CalculateScore(targetNumber, playerGuess);
 
-        var resultFromGuess = Score(scoreResult.Bulls, scoreResult.Cows);
-
-        return (resultFromGuess == "BBBB", resultFromGuess);
+        return CreateScoreMessage(scoreResult.Bulls, scoreResult.Cows);
     }
 
-    public bool isGuessCorrect(string scoreResult)
+    public bool IsGuessCorrect(string scoreResult)
     {
-        return scoreResult == "BBBB";
+        return scoreResult == correctResult;
     }
 
     private MooScoreResult CalculateScore(string targetNumber, string playerGuess)
@@ -56,9 +56,9 @@ public class MooGameScoreValidator
         return targetNumber[index] == playerGuess[index];
     }
 
-    private string Score(int bulls, int cows)
+    private string CreateScoreMessage(int bulls, int cows)
     {
-        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
+        return $"{new string('B', bulls)}{(cows > 0 ? new string('C', cows) : "")}";
     }
 }
 
