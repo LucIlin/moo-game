@@ -1,4 +1,6 @@
-﻿namespace MooGame.App.Model;
+﻿using MooGame.App.Interfaces;
+
+namespace MooGame.App.Model;
 
 public class MooScoreResult : IScoreResult
 {

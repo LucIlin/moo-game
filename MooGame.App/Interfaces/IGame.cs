@@ -1,5 +1,4 @@
 ﻿using MooGame.App.Helper;
-using MooGame.App.Model;
 
 namespace MooGame.App.Interfaces;
 

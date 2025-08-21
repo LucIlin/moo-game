@@ -1,4 +1,4 @@
-﻿namespace MooGame.App.Model
+﻿namespace MooGame.App.Interfaces
 {
     public interface IScoreResult
     {
