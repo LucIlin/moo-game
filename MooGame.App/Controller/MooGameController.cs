@@ -1,4 +1,5 @@
-﻿using MooGame.App.Helper;
+﻿using MooGame.App.Extensions;
+using MooGame.App.Helper;
 using MooGame.App.Interfaces;
 using MooGame.App.Model;
 
