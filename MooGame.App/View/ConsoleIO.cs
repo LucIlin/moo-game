@@ -27,5 +27,5 @@ public class ConsoleIO : IInputOutput
         return input;
     }
 
-    public void WriteOutput(string message) => Console.WriteLine(message);
+    public void WriteOutput(string message) => Console.WriteLine(message + "\n");
 }
