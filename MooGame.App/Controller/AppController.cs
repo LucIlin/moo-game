@@ -1,17 +1,20 @@
-﻿using MooGame.App.Helper;
-using MooGame.App.Interfaces;
+﻿using MooGame.App.Interfaces;
+using MooGame.App.Model;
 
 namespace MooGame.App.Controller;
 
 public class AppController
 {
-    private IGame _game;
-    public AppController(IGame game)
+    private readonly IGameController _gameController;
+    private readonly IGameLobby _gameLobby;
+    public AppController(IGameController gameController, IGameLobby gameLobby)
     {
-        _game = game;
+        _gameController = gameController;
+        _gameLobby = gameLobby;
     }
     public void RunApplication()
     {
-        _game.RunGame();
+        _gameLobby.CreatePlayer();
+        _gameController.PlayGame();
     }
 }
