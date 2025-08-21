@@ -2,7 +2,8 @@
 using MooGame.App.Controller;
 using MooGame.App.Helper;
 using MooGame.App.View;
-namespace MooGame;
+using MooGame.App.Model;
+namespace MooGame.App;
 
 public class Program
 {
@@ -10,8 +11,9 @@ public class Program
     {
         var io = new ConsoleIO();
         var numberGenerator = new RandomMooNumberGenerator();
-        var mooGame = new MooGameApp(numberGenerator, io);
-        var app = new AppController(mooGame);
+        var mooGame = new MooGameEngine(numberGenerator);
+        var controller = new GuessingGameController(mooGame, io);
+        var app = new AppController(controller, new GameLobby(io));
 
         app.RunApplication();
     }
