@@ -1,26 +1,28 @@
 ﻿using MooGame.App.Extensions;
+using MooGame.App.Interfaces;
+using MooGame.App.Model;
 
 namespace MooGame.App.Helper;
 
 public class MooGameScoreValidator
 {
+    private const string correctResult = "BBBB";
+
     public MooGameScoreValidator()
     {
 
     }
  
-    public (bool, string) CheckGuess(string targetNumber, string playerGuess)
+    public MooScoreResult CheckGuess(string targetNumber, string playerGuess)
     {
         var scoreResult = CalculateScore(targetNumber, playerGuess);
 
-        var resultFromGuess = Score(scoreResult.Bulls, scoreResult.Cows);
-
-        return (resultFromGuess == "BBBB", resultFromGuess);
+        return scoreResult;
     }
 
-    public bool isGuessCorrect(string scoreResult)
+    public bool IsGuessCorrect(IScoreResult scoreResult)
     {
-        return scoreResult == "BBBB";
+        return scoreResult.ToString() == correctResult;
     }
 
     private MooScoreResult CalculateScore(string targetNumber, string playerGuess)
@@ -55,15 +57,4 @@ public class MooGameScoreValidator
     {
         return targetNumber[index] == playerGuess[index];
     }
-
-    private string Score(int bulls, int cows)
-    {
-        return $"{new string('B', bulls)}{(cows > 0 ? " " + new string('C', cows) : "")}";
-    }
-}
-
-public class MooScoreResult
-{
-    public int Bulls { get; set; }
-    public int Cows { get; set; }
 }

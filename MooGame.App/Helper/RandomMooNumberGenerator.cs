@@ -2,9 +2,9 @@
 
 namespace MooGame.App.Helper;
 
-public class RandomMooNumberGenerator : INumberGenerator
+public class RandomMooNumberGenerator : IGuessGenerator
 {
-    public string GenerateNumber()
+    public string GenerateGuess()
     {
         //Bryt ner den här metoden till 2 olika metoder, en som skapar målsiffran/strängen och den 
         //andra metoden som kollar om alla siffror är unika

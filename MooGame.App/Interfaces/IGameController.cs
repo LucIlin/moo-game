@@ -4,5 +4,6 @@ namespace MooGame.App.Interfaces;
 
 public interface IGameController
 {
-    public void Play();
+    public void PlayGame();
+    
 }

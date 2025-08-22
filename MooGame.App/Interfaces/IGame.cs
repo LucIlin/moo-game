@@ -2,7 +2,12 @@
 
 namespace MooGame.App.Interfaces;
 
+
 public interface IGame
 {
-    public void RunGame();
+    public int GuessCount { get; set; }
+    public bool IsRoundOver { get; set; }
+    public void StartRound();
+    public IScoreResult HandleGuess(string guess);
+
 }
