@@ -9,4 +9,5 @@ public interface IUserInput
     );
 
     bool GetYesNo(string? question);
+    void WriteOutput(string output);
 }

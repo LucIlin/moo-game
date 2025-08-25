@@ -81,4 +81,6 @@ public class UserInputHandler : IUserInput
 
         return input;
     }
+    
+    public void WriteOutput(string output) => _io.WriteOutput(output);
 }
