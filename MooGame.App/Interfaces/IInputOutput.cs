@@ -3,5 +3,5 @@
 public interface IInputOutput
 {
     void WriteOutput(string output);
-    string ReadInput();
+    string? ReadInput();
 }

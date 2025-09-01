@@ -2,6 +2,7 @@
 using MooGame.App.Interfaces;
 using MooGame.App.Model;
 using System.ComponentModel.DataAnnotations;
+using MooGame.App.Helper;
 
 namespace MooGame.App.Controller;
 
@@ -9,10 +10,10 @@ public class GuessingGameController : IGameController //Controller should have p
 {
     private readonly IGame _game;
 
-    private readonly IInputOutput _inputOutput;
+    private readonly IUserInput _inputOutput;
 
     bool isRunning = true;
-    public GuessingGameController(IGame game, IInputOutput inputOutput)
+    public GuessingGameController(IGame game, IUserInput inputOutput)
     {
         _game = game;
         _inputOutput = inputOutput;
@@ -29,7 +30,7 @@ public class GuessingGameController : IGameController //Controller should have p
 
             while (!_game.IsRoundOver)
             {
-                string playerGuess = _inputOutput.ReadInput();
+                string playerGuess = _inputOutput.GetInput();
 
                var result = _game.HandleGuess(playerGuess); //behöver returnera BBBB eller något liknande
 
@@ -63,7 +64,7 @@ public class GuessingGameController : IGameController //Controller should have p
     private string AskToContinue()
     {
         _inputOutput.WriteOutput("Continue? y/n");
-        return _inputOutput.ReadInput();
+        return _inputOutput.GetInput();
     }
     private void ShowPlayerTheResult(int numberOfGuesses) => _inputOutput.WriteOutput($"Correct, it took {numberOfGuesses} guesses");
 }

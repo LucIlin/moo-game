@@ -9,7 +9,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var io = new ConsoleIO();
+        var io = new UserInputHandler(new ConsoleIO());
         var numberGenerator = new RandomMooNumberGenerator();
         var mooGame = new MooGameEngine(numberGenerator);
         var controller = new GuessingGameController(mooGame, io);
