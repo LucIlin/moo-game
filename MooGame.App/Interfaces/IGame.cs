@@ -9,5 +9,5 @@ public interface IGame
     public bool IsRoundOver { get; set; }
     public void StartRound();
     public IScoreResult HandleGuess(string guess);
-
+    bool CheckForGuess(string guess);
 }

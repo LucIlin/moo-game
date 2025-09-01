@@ -26,16 +26,16 @@ public class GuessingGameController : IGameController //Controller should have p
         {
             _game.StartRound();
 
-            GivePlayerInstructions();
+            GivePlayerInstructions(); //tillhör game?
 
-            while (!_game.IsRoundOver)
+            while (!_game.IsRoundOver) //Göra en try-catch här?
             {
-                string playerGuess = _inputOutput.GetInput();
+                string playerGuess = _inputOutput.GetInput(customValidator : _game.CheckForGuess); //todo: Lucas
 
                var result = _game.HandleGuess(playerGuess); //behöver returnera BBBB eller något liknande
 
                 _inputOutput.WriteOutput("You guessed: " + playerGuess);
-                _inputOutput.WriteOutput(result.ToString() ?? "No B's or C's");
+                _inputOutput.WriteOutput(result.ToString() ?? "No B's or C's"); //tillhör "game", kanske game-session eller gamelobby?
                 if(result.IsSuccess)
                 {
                     _game.IsRoundOver = true;
@@ -59,7 +59,7 @@ public class GuessingGameController : IGameController //Controller should have p
     private void GivePlayerInstructions()
     {
         _inputOutput.WriteOutput("New game:\n");
-        _inputOutput.WriteOutput("Guess with 4 digits");
+        _inputOutput.WriteOutput("Guess with 4 digits"); //Väldigt moogame-aktigt, ska kanske hämta data från moogameengine?
     }
     private string AskToContinue()
     {

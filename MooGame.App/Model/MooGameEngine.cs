@@ -2,6 +2,7 @@
 using MooGame.App.Helper;
 using MooGame.App.Interfaces;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace MooGame.App.Model;
 
@@ -32,5 +33,13 @@ public class MooGameEngine : IGame
         IScoreResult bullsAndCowsResult = _validator.CheckGuess(playerGuess, TargetNumber);
         bullsAndCowsResult.IsSuccess = _validator.IsGuessCorrect(bullsAndCowsResult);
         return bullsAndCowsResult;
+    }
+
+    public bool CheckForGuess(string playerGuess) //Gör denna metod clean, 4 är en magisk siffra
+    {
+        if (playerGuess.Length == 4 && Regex.IsMatch(playerGuess, @"^\d+$"))
+            return true;
+
+        return false;
     }
 }
