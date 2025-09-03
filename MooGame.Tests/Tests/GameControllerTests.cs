@@ -9,7 +9,8 @@ namespace MooGame.Tests.Tests
     {
 
         [TestMethod]
-        [TestCategory("Done")]
+        [TestCategory("Status:Done")]
+        [TestCategory("Component:GameController")]
         public void Test_PlayGame_CorrectGuess_ThenExitGame()
         {
             //Arrange
@@ -25,7 +26,8 @@ namespace MooGame.Tests.Tests
         }
 
         [DataTestMethod]
-        [TestCategory("Done")]
+        [TestCategory("Status:Done")]
+        [TestCategory("Component:GameController")]
         [DataRow("INSTRUCTIONS")]
         [DataRow("Continue? y/n")]
         [DataRow("Correct, it took 1 guesses")]
@@ -48,7 +50,8 @@ namespace MooGame.Tests.Tests
         }
 
         [TestMethod]
-        [TestCategory("Done")]
+        [TestCategory("Status:Done")]
+        [TestCategory("Component:GameController")]
         public void Test_PlayGame_CorrectNumberOfGuesses()
         {
             //Arrange
@@ -67,7 +70,8 @@ namespace MooGame.Tests.Tests
         }
 
         [TestMethod]
-        [TestCategory("Done")]
+        [TestCategory("Status:Done")]
+        [TestCategory("Component:GameController")]
         public void PlayGame_InvalidInputs_DoNotCount()
         {
             //Arrange
@@ -86,7 +90,8 @@ namespace MooGame.Tests.Tests
         }
 
         [TestMethod]
-        [TestCategory("Done")]
+        [TestCategory("Status:Done")]
+        [TestCategory("Component:GameController")]
         public void PlayGame_TwoRounds_WhenYThenN()
         {   
             //Arrange
