@@ -1,20 +1,26 @@
-﻿using MooGame.App;
-using MooGame.App.Controller;
+﻿using MooGame.App.Controller;
 using MooGame.App.Helper;
-using MooGame.App.View;
+using MooGame.App.Interfaces;
 using MooGame.App.Model;
+using MooGame.App.View;
 namespace MooGame.App;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        var io = new UserInputHandler(new ConsoleIO());
-        var numberGenerator = new RandomMooNumberGenerator();
-        var mooGame = new MooGameEngine(numberGenerator);
-        var controller = new GuessingGameController(mooGame, io);
-        var app = new AppController(controller, new GameLobby(io));
+        IInputOutput io = new ConsoleIO();
+        IUserInputHandler userInputHandler = new UserInputHandler(io);
+        IGameFactory gameFactory = new GameFactory(userInputHandler);
+        var app = new AppController(gameFactory);
 
-        app.RunApplication();
+        try
+        {
+            app.RunApplication();
+        }
+        catch (Exception e)
+        {
+            io.WriteOutput(e.Message);
+        }
     }
 }
