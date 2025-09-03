@@ -4,7 +4,7 @@ using MooGame.App.Interfaces;
 
 namespace MooGame.App.Helper;
 
-public class UserInputHandler : IUserInput
+public class UserInputHandler : IUserInputHandler
 {
     private IInputOutput _io;
     public UserInputHandler(IInputOutput io)

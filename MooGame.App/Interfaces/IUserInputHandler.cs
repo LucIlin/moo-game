@@ -1,6 +1,6 @@
 ﻿namespace MooGame.App.Helper;
 
-public interface IUserInput
+public interface IUserInputHandler
 {
     string GetInput(
         string? prompt = null,
