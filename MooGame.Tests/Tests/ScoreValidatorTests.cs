@@ -1,46 +1,50 @@
-﻿// using MooGame.App;
-// using MooGame.App.Helper;
-// using System.ComponentModel.DataAnnotations;
-// namespace MooGame.Tests;
-//
-// [TestClass]
-// [TestCategory("Not Implemented")]
-// public sealed class ScoreValidatorTests
-// {
-//     [TestMethod]
-//     [TestCategory("Not Implemented")]
-//     public void Test_CheckScore_ResultMatchesScore()
-//     {
-//         //Arrange
-//         var validator = new MooGameScoreValidator();
-//         var targetNumber = "1234";
-//         var guesses = new List<string>(new[] { "1233", "1243", "1234" });
-//         var expectedResults = new List<string> { "BBB", "BB CC", "BBBB" };
-//
-//         //Act
-//         var results = guesses.Select(guess => validator.CheckGuess(targetNumber, guess)).ToList();
-//
-//         //Assert
-//         CollectionAssert.AreEqual(expectedResults, results);
-//     }
-//
-//
-//     [TestMethod]
-//     [TestCategory("Not Implemented")]
-//     public void CheckGuess_ReturnsCorrectBullCount_WhenDigitsAreInCorrectPosition()
-//     {
-//         // Arrange
-//         var validator = new MooGameScoreValidator();
-//         var target = "1234";
-//
-//         // Act + Assert
-//         Assert.AreEqual("B", validator.CheckGuess(target, "1555"));   // Only '1' is correct and in the correct place
-//         Assert.AreEqual("BB", validator.CheckGuess(target, "1275"));  // '1' and '2' are in correct positions
-//         Assert.AreEqual("BBBB", validator.CheckGuess(target, "1234")); // All correct
-//         Assert.AreEqual("", validator.CheckGuess(target, "5678"));    // No bulls or cows
-//     }
-// }
-//
-//
-//
-//
+﻿using MooGame.App;
+using MooGame.App.Helper;
+using MooGame.App.Model;
+using System.ComponentModel.DataAnnotations;
+namespace MooGame.Tests;
+
+[TestClass]
+public sealed class ScoreValidatorTests
+{
+    [DataTestMethod]
+    [TestCategory("Status:Done")]
+    [TestCategory("Component:ScoreValidator")]
+    [DataRow("1233", 3, 0)]
+    [DataRow("1243", 2, 2)]
+    [DataRow("1234", 4, 0)]
+    public void CheckGuess_ReturnsExpectedAmount_BullsAndCows(string guess, int bulls, int cows)
+    {
+        var validator = new MooGameScoreValidator();
+        var result = validator.CheckGuess("1234", guess);
+        Assert.AreEqual(bulls, result.Bulls);
+        Assert.AreEqual(cows, result.Cows);
+    }
+
+
+    [DataTestMethod]
+    [TestCategory("Status:Done")]
+    [TestCategory("Component:ScoreValidator")]
+    [DataRow("1555", "B")]
+    [DataRow("1275", "BB")]
+    [DataRow("1234", "BBBB")]
+    [DataRow("1432", "BBCC")]
+    [DataRow("5678", "")]
+    public void CheckGuess_ReturnsExpectedStringResult(string guess, string expectedResult)
+    {
+        // Arrange
+        var validator = new MooGameScoreValidator();
+        var target = "1234";
+
+        // Act
+        var actualResult = validator.CheckGuess(target, guess).ToString();
+
+        // Assert
+        Assert.AreEqual(expectedResult, actualResult);
+    }
+
+}
+
+
+
+
