@@ -13,7 +13,7 @@ public class MooGameScoreValidator
 
     }
  
-    public MooScoreResult CheckGuess(string targetNumber, string playerGuess)
+    public MooScoreResult CheckGuess(string playerGuess, string targetNumber)
     {
         var scoreResult = CalculateScore(targetNumber, playerGuess);
 
@@ -53,8 +53,8 @@ public class MooGameScoreValidator
         return result;
     }
 
-    private bool CompareTargetNumberAndPlayerGuessByIndex(string targetNumber, string playerGuess, int index)
+    private bool CompareTargetNumberAndPlayerGuessByIndex(string? targetNumber, string playerGuess, int index)
     {
-        return targetNumber[index] == playerGuess[index];
+        return targetNumber?[index] == playerGuess[index];
     }
 }
