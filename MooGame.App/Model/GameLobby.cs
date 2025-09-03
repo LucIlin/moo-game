@@ -10,12 +10,26 @@ namespace MooGame.App.Model
 {
     public class GameLobby : IGameLobby
     {
-        private PlayerData _playerData;
-        private readonly IUserInput _io;
-        public GameLobby(IUserInput io) 
+        private PlayerData? _playerData;
+        private readonly IUserInputHandler _io;
+        private IGameFactory _gameFactory;
+        public GameLobby(IUserInputHandler io, IGameFactory gameFactory) 
         {
             _io = io;
+            _gameFactory = gameFactory;
         }
+
+        public IGameController SelectGame()
+        {
+            _io.WriteOutput("Please select game:\n1. MooGame\n2. Close Application");
+            string input = _io.GetInput();
+
+            if (input != "1")
+                throw new Exception("Game will now close");
+
+            return _gameFactory.CreateGame();
+        }
+
         public void CreatePlayer()
         {
             AskPlayerForName();
@@ -25,5 +39,6 @@ namespace MooGame.App.Model
 
         }
         private void AskPlayerForName() => _io.WriteOutput("Enter your user name:");
+      
     }
 }
