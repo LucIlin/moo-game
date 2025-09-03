@@ -5,9 +5,10 @@ namespace MooGame.App.Interfaces;
 
 public interface IGame
 {
-    public int GuessCount { get; set; }
-    public bool IsRoundOver { get; set; }
+    public int GuessCount { get; }
+    public bool IsRoundOver { get; }
     public void StartRound();
+    public string GetInstructions();
     public IScoreResult HandleGuess(string guess);
-    bool CheckForGuess(string guess);
+    bool IsValidGuess(string guess);
 }
