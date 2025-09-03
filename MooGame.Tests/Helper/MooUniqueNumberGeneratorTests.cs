@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 namespace MooGame.App.Helper.Tests
 {
     [TestClass()]
+    
     public class MooUniqueNumberGeneratorTests
     {
         [DataTestMethod()]
+        [TestCategory("Done")]
         [DataRow(1)]
         [DataRow(4)]
         [DataRow(8)]
@@ -30,6 +32,7 @@ namespace MooGame.App.Helper.Tests
         }
 
         [DataTestMethod()]
+        [TestCategory("Done")]
         [DataRow(1)]
         [DataRow(4)]
         [DataRow(8)]
