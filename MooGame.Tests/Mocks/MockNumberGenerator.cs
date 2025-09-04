@@ -2,14 +2,15 @@
 
 namespace MooGame.Tests.Mocks;
 
-internal class MockNumberGenerator : IGuessGenerator
+internal class MockNumberGenerator : INumberGenerator
 {
     string _number {  get; set; }
     public MockNumberGenerator(string desiredNumber)
     {
         _number = desiredNumber;
     }
-    public string GenerateGuess()
+
+    public string GenerateNumber(int length)
     {
         return _number;
     }
