@@ -11,7 +11,7 @@ public class GameController : IGameController
 
     private readonly IUserInputHandler _io;
 
-    bool isRunning = true;
+    private bool isRunning = true;
     public GameController(IGame game, IUserInputHandler inputOutput)
     {
         _game = game;
