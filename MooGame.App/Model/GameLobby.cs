@@ -10,7 +10,7 @@ namespace MooGame.App.Model
 {
     public class GameLobby : IGameLobby
     {
-        private PlayerData? _playerData;
+        private Player _player;
         private readonly IUserInputHandler _io;
         private IGameFactory _gameFactory;
         public GameLobby(IUserInputHandler io, IGameFactory gameFactory) 
@@ -27,15 +27,21 @@ namespace MooGame.App.Model
             if (input != "1")
                 throw new Exception("Game will now close");
 
-            return _gameFactory.CreateGame();
+            return _gameFactory.CreateGame(_player);
+        }
+
+        public IGameController InitializeGame()
+        {
+            CreatePlayer();
+            return SelectGame();
         }
 
         public void CreatePlayer()
         {
             AskPlayerForName();
             string playerAnswer = _io.GetInput();
-            _playerData = new PlayerData(playerAnswer, 1);
-            _io.WriteOutput($"Hello there, {_playerData.Name}");
+            _player = new Player(playerAnswer, 1);
+            _io.WriteOutput($"Hello there, {_player.Name}");
 
         }
         private void AskPlayerForName() => _io.WriteOutput("Enter your user name:");

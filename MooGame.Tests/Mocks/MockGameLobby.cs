@@ -23,4 +23,9 @@ internal class MockGameLobby : IGameLobby
         LastReturnedController = new MockGameController(_io);
         return LastReturnedController;
     }
+
+    public IGameController InitializeGame()
+    {
+        throw new NotImplementedException();
+    }
 }

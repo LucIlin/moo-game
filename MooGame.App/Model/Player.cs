@@ -1,13 +1,13 @@
 ﻿namespace MooGame.App.Model;
 
-class PlayerData //Ska metoderna i playerdata brytas ut eller tillhör de playerdata? kolla med chat
+public class Player
 {
     public string Name { get; private set; }
     public int NumberOfGames { get; private set; } //NumberOfGames? Eller vad är det här?
     int TotalNumberOfGuesses;
 
 
-    public PlayerData(string name, int guesses)
+    public Player(string name, int guesses)
     {
         Name = name;
         NumberOfGames = 1;

@@ -8,14 +8,17 @@ namespace MooGame.App.Controller;
 public class GameController : IGameController
 {
     private readonly IGame _game;
-
+    private readonly Scoreboard _scoreboard;
     private readonly IUserInputHandler _io;
+    private readonly Player _player;
 
-    private bool isRunning = true;
-    public GameController(IGame game, IUserInputHandler inputOutput)
+    bool isRunning = true;
+    public GameController(IGame game, IUserInputHandler inputOutput, Player player)
     {
         _game = game;
         _io = inputOutput;
+        _scoreboard = new Scoreboard();
+        _player = player;
     }
 
     public void PlayGame()
@@ -36,7 +39,12 @@ public class GameController : IGameController
 
                     _io.WriteOutput(ShowPlayerResult(result));
                 }
-                ShowPlayerTheResult(_game.GuessCount); //Kommer finnas en Scoreboard här som lucas fixar
+                
+                ShowPlayerTheResult(_game.GuessCount);
+                
+                _scoreboard.WriteResult(_player.Name,  _game.GuessCount);
+
+                PromptScoreboard();
 
                 string playerAnswer = GetContinueAnswer(); //kommer försvinna, lucas tar det
 
@@ -46,7 +54,15 @@ public class GameController : IGameController
         }
         catch (Exception e)
         {
-        _io.WriteOutput(e.Message);
+            _io.WriteOutput(e.Message);
+        }
+    }
+
+    private void PromptScoreboard()
+    {
+        if (_io.GetYesNo("Would you like to see the scoreboard? (y/n)"))
+        {
+            _scoreboard.Print();
         }
     }
 
