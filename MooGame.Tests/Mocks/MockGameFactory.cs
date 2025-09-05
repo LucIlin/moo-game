@@ -2,13 +2,14 @@
 using MooGame.App.Helper;
 using MooGame.App.Interfaces;
 using MooGame.App.Model;
+using System.Diagnostics;
 
 namespace MooGame.Tests.Mocks;
 
-public class MockGameFactory : IGameFactory
+internal class MockGameFactory : IGameFactory
 {
     public IUserInputHandler UserInput { get; set; }
-
+    public IGameLobby LastCreatedLobby { get; private set; }
     public MockGameFactory(IUserInputHandler userInput)
     {
         UserInput = userInput;
@@ -18,5 +19,11 @@ public class MockGameFactory : IGameFactory
         var mockGen = new MockNumberGenerator("1234");
         var mooGame = new MooGameEngine(mockGen);
         return new GameController(mooGame, UserInput);
+    }
+
+    public IGameLobby CreateGameLobby()
+    {
+        LastCreatedLobby = new MockGameLobby(UserInput, this);
+        return LastCreatedLobby;
     }
 }
