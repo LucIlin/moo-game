@@ -22,18 +22,4 @@ public class UserInputHandlerTests
         Assert.AreEqual("Input length larger than 25 characters.", mockIo.Outputs[0]);
         Assert.AreEqual("valid state", validOutput);
     }
-    
-    // [TestMethod]
-    // [DataRow("")]
-    // [DataRow(null)]
-    // public void IsValidChars_InputIsEmptyString_ThrowException(string input)
-    // {
-    //     Assert.ThrowsException<ArgumentException>(() => UserInputHandler.IsValidChars(input));
-    // }
-    //
-    // [TestMethod]
-    // public void IsValidChars_NotValidChar_ThrowException()
-    // {
-    //     Assert.ThrowsException<ArgumentException>(() => UserInputHandler.IsValidChars("你"));
-    // }
 }

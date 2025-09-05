@@ -46,9 +46,7 @@ public class GameController : IGameController
 
                 PromptScoreboard();
 
-                string playerAnswer = GetContinueAnswer(); //kommer försvinna, lucas tar det
-
-                isRunning = AskPlayerToGoAgain(playerAnswer); //kommer försvinna, lucas tar det
+                AskPlayerToGoAgain(); 
 
             } while (isRunning);
         }
@@ -71,19 +69,12 @@ public class GameController : IGameController
         return result.ToString() ?? "No B's or C's";
     }
 
-    private bool AskPlayerToGoAgain(string answer) //kommer försvinna, lucas tar det
+    private void AskPlayerToGoAgain()
     {
-        if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
+        if (!_io.GetYesNo("Would you like to play again? (y/n)"))
         {
             isRunning = false;
         }
-
-        return isRunning;
-    }
-    private string GetContinueAnswer() //kommer försvinna, lucas tar det
-    {
-        _io.WriteOutput("Continue? y/n");
-        return _io.GetInput();
     }
     private void ShowPlayerTheResult(int numberOfGuesses) => _io.WriteOutput($"Correct, it took {numberOfGuesses} guesses");
 }
