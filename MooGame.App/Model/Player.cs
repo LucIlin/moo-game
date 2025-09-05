@@ -3,41 +3,29 @@
 public class Player
 {
     public string Name { get; private set; }
-    public int NumberOfGames { get; private set; } //NumberOfGames? Eller vad är det här?
-    int TotalNumberOfGuesses;
 
+    public int NumberOfGames { get; private set; } 
+    
+    private int _numberOfGuesses;
+    
 
     public Player(string name, int guesses)
     {
         Name = name;
         NumberOfGames = 1;
-        TotalNumberOfGuesses = guesses;
+
+        _numberOfGuesses = guesses;
     }
 
-    public void Update(int guesses) //Bryt ut det här till en egen klass
+    public void Update(int guesses)
     {
-        TotalNumberOfGuesses += guesses;
+        _numberOfGuesses += guesses;
         NumberOfGames++;
     }
 
-    public double Average() //PlayerDataController
+    public double Average()
     {
-        return (double)TotalNumberOfGuesses / NumberOfGames;
-    }
-
-
-    //public override bool Equals(object p) //Har den någon användning?
-    //{
-    //    return Name.Equals(((PlayerData)p).Name);
-    //}
-
-
-    public override int GetHashCode() //Ska man ta bort?
-    {
-        return Name.GetHashCode();
+        return (double)_numberOfGuesses / NumberOfGames;
     }
 }
 
-
-
-//Olika klass ideer, PLAYER, PLAYERCONTROLLER, PLAYERDATA, GAME, GAMECONTROLLER,
