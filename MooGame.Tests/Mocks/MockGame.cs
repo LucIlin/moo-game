@@ -15,7 +15,7 @@ namespace MooGame.Tests.Mocks
             IsRoundOver = false; 
         }
         public string GetInstructions() => $"INSTRUCTIONS";
-        public IScoreResult HandleGuess(string guess)
+        public IScoreResult GetGuessOutcome(string guess)
         {
             GuessCount++;
 

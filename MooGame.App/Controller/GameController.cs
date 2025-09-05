@@ -32,13 +32,13 @@ public class GameController : IGameController
                 {
                     var playerGuess = _io.GetInput(customValidator: _game.IsValidGuess);
 
-                    var result = _game.HandleGuess(playerGuess);
+                    var result = _game.GetGuessOutcome(playerGuess);
 
                     _io.WriteOutput(ShowPlayerResult(result));
                 }
                 ShowPlayerTheResult(_game.GuessCount); //Kommer finnas en Scoreboard här som lucas fixar
 
-                string playerAnswer = AskToContinue(); //kommer försvinna, lucas tar det
+                string playerAnswer = GetContinueAnswer(); //kommer försvinna, lucas tar det
 
                 isRunning = AskPlayerToGoAgain(playerAnswer); //kommer försvinna, lucas tar det
 
@@ -64,7 +64,7 @@ public class GameController : IGameController
 
         return isRunning;
     }
-    private string AskToContinue() //kommer försvinna, lucas tar det
+    private string GetContinueAnswer() //kommer försvinna, lucas tar det
     {
         _io.WriteOutput("Continue? y/n");
         return _io.GetInput();
