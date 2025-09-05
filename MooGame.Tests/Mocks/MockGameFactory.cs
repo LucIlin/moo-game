@@ -23,7 +23,7 @@ internal class MockGameFactory : IGameFactory
 
     public IGameLobby CreateGameLobby()
     {
-        LastCreatedLobby = new MockGameLobby(UserInput, this);
+        LastCreatedLobby = new MockGameLobby(UserInput);
         return LastCreatedLobby;
     }
 }
