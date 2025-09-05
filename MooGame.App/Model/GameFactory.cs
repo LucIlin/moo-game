@@ -1,0 +1,27 @@
+﻿using MooGame.App.Controller;
+using MooGame.App.Helper;
+using MooGame.App.Interfaces;
+
+namespace MooGame.App.Model;
+
+public class GameFactory : IGameFactory
+{
+    public IUserInputHandler UserInput { get; set; }
+
+    public GameFactory(IUserInputHandler userInput) 
+    {
+        UserInput = userInput;
+    }
+    
+    public IGameLobby CreateGameLobby()
+    {
+        return new GameLobby(UserInput, this);
+    }
+    
+    public IGameController CreateGame(Player player)
+    {
+        var numberGenerator = new MooUniqueNumberGenerator();
+        IGame game = new MooGameEngine(numberGenerator);
+        return new GameController(game, UserInput, player);
+    }
+}
