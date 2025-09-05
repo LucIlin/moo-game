@@ -2,8 +2,6 @@
 
 namespace MooGame.Tests.Tests;
 
-//TODO Command, Number, Name validation
-
 [TestClass]
 [TestCategory("UserInputHandlerTests")]
 public class UserInputHandlerTests
