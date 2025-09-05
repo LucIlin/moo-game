@@ -9,6 +9,6 @@ public interface IGame
     public bool IsRoundOver { get; }
     public void StartRound();
     public string GetInstructions();
-    public IScoreResult HandleGuess(string guess);
+    public IScoreResult GetGuessOutcome(string guess);
     bool IsValidGuess(string guess);
 }

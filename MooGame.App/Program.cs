@@ -10,12 +10,16 @@ public class Program
     public static void Main(string[] args)
     {
         IInputOutput io = new ConsoleIO();
-        IUserInputHandler userInputHandler = new UserInputHandler(io);
-        IGameFactory gameFactory = new GameFactory(userInputHandler);
-        var app = new AppController(gameFactory);
 
         try
         {
+            
+            IUserInputHandler userInputHandler = new UserInputHandler(io);
+            
+            IGameFactory gameFactory = new GameFactory(userInputHandler);
+            var app = new AppController(gameFactory);
+
+
             app.RunApplication();
         }
         catch (Exception e)

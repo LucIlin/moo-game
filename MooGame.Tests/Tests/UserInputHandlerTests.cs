@@ -1,6 +1,6 @@
 ﻿using MooGame.App.Helper;
 
-namespace MooGame.Tests;
+namespace MooGame.Tests.Tests;
 
 //TODO Command, Number, Name validation
 

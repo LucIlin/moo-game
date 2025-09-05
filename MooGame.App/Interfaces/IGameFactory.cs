@@ -6,4 +6,5 @@ public interface IGameFactory
 {
     IUserInputHandler UserInput { get; set; }
     IGameController CreateGame();
+    IGameLobby CreateGameLobby();
 }

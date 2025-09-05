@@ -28,7 +28,7 @@ public class MooGameEngine : IGame
         IsRoundOver = false;
     }
     public string GetInstructions() => "New game:\nGuess with 4 digits:";
-    public IScoreResult HandleGuess(string playerGuess)
+    public IScoreResult GetGuessOutcome(string playerGuess)
     {
         GuessCount++;
         IScoreResult bullsAndCowsResult = _validator.CheckGuess(playerGuess, TargetNumber);
