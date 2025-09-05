@@ -5,28 +5,25 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using MooGame.App.Helper;
+using MooGame.App.Interfaces;
 using MooGame.App.Model;
 
 namespace MooGame.App
 {
-    /// <summary>
-    /// Persists each game as a CSV row: When (ISO8601), PlayerName (escaped), Guesses (int).
-    /// Aggregates to Player objects when printing. Lower average guesses ranks higher.
-    /// </summary>
     public sealed class Scoreboard
     {
         private readonly string _path;
         private readonly Encoding _encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+        private IUserInputHandler _inputOutput;
 
-        public Scoreboard(string path = "data/scoreboard.csv")
+        public Scoreboard(IUserInputHandler io, string path = "data/scoreboard.csv")
         {
             if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException("Path is required.", nameof(path));
             _path = path;
+            _inputOutput = io;
         }
-
-        /// <summary>
-        /// Append one finished game. Only writes to the file; aggregation happens when printing.
-        /// </summary>
+        
         public void WriteResult(string playerName, int guesses)
         {
             if (string.IsNullOrWhiteSpace(playerName)) throw new ArgumentException("Player name is required.", nameof(playerName));
@@ -43,10 +40,7 @@ namespace MooGame.App
 
             File.AppendAllText(_path, line + Environment.NewLine, _encoding);
         }
-
-        /// <summary>
-        /// Reads the CSV and aggregates to Player objects.
-        /// </summary>
+        
         public IReadOnlyList<Player> GetPlayers()
         {
             var players = new Dictionary<string, Player>(StringComparer.OrdinalIgnoreCase);
@@ -82,11 +76,7 @@ namespace MooGame.App
 
             return players.Values.ToList();
         }
-
-        /// <summary>
-        /// Prints the scoreboard to the console (freshly loaded from file).
-        /// Sorted by Average ascending, then by NumberOfGames descending, then by Name.
-        /// </summary>
+        
         public void Print(int top = 10)
         {
             var data = GetPlayers()
@@ -96,13 +86,13 @@ namespace MooGame.App
                 .Take(top > 0 ? top : int.MaxValue)
                 .ToList();
 
-            Console.WriteLine();
-            Console.WriteLine("=== SCOREBOARD (lower average guesses is better) ===");
+            _inputOutput.WriteOutput("");
+            _inputOutput.WriteOutput("=== SCOREBOARD (lower average guesses is better) ===");
 
             if (data.Count == 0)
             {
-                Console.WriteLine("No results yet. Play a game to create the first score!");
-                Console.WriteLine();
+                _inputOutput.WriteOutput("No results yet. Play a game to create the first score!");
+                _inputOutput.WriteOutput("");
                 return;
             }
 
@@ -110,61 +100,58 @@ namespace MooGame.App
             int nameWidth  = Math.Clamp(data.Max(p => p.Name.Length), 8, 22);
             int gamesWidth = Math.Max(5, data.Max(p => p.NumberOfGames.ToString().Length));
             const int avgWidth = 7;
-
-            Console.WriteLine($"{Pad("#", rankWidth)}  {Pad("Player", nameWidth)}  {PadLeft("Games", gamesWidth)}  {PadLeft("Avg", avgWidth)}");
-            Console.WriteLine(new string('-', rankWidth + 2 + nameWidth + 2 + gamesWidth + 2 + avgWidth));
+            _inputOutput.WriteOutput($"{Pad("#", rankWidth)}  {Pad("Player", nameWidth)}  {PadLeft("Games", gamesWidth)}  {PadLeft("Avg", avgWidth)}");
+            _inputOutput.WriteOutput(new string('-', rankWidth + 2 + nameWidth + 2 + gamesWidth + 2 + avgWidth));
 
             int rank = 1;
             foreach (var p in data)
             {
-                Console.WriteLine(
-                    $"{Pad(rank.ToString(), rankWidth)}  " +
-                    $"{Pad(p.Name, nameWidth)}  " +
-                    $"{PadLeft(p.NumberOfGames.ToString(), gamesWidth)}  " +
-                    $"{PadLeft(p.Average().ToString("0.00", CultureInfo.InvariantCulture), avgWidth)}");
+                _inputOutput.WriteOutput($"{Pad(rank.ToString(), rankWidth)}  " +$"{Pad(p.Name, nameWidth)}  " + $"{PadLeft(p.NumberOfGames.ToString(), gamesWidth)}  " + $"{PadLeft(p.Average().ToString("0.00", CultureInfo.InvariantCulture), avgWidth)}");
                 rank++;
             }
 
-            Console.WriteLine();
+            _inputOutput.WriteOutput("");
         }
         
-        private static string EscapeCsv(string s)
+        private static string EscapeCsv(string text)
         {
-            if (s.Contains('"') || s.Contains(',') || s.Contains('\n') || s.Contains('\r'))
-                return "\"" + s.Replace("\"", "\"\"") + "\"";
-            return s;
+            if (text.Contains('"') || text.Contains(',') || text.Contains('\n') || text.Contains('\r'))
+                return "\"" + text.Replace("\"", "\"\"") + "\"";
+            return text;
         }
 
         private static IEnumerable<string> SplitCsv(string line)
         {
-            var sb = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             bool inQuotes = false;
 
             for (int i = 0; i < line.Length; i++)
             {
-                char c = line[i];
-                if (c == '"')
+                char value = line[i];
+                
+                
+                if (value == '"')
                 {
                     if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
                     {
-                        sb.Append('"'); i++; 
+                        stringBuilder.Append('"'); i++; 
                     }
                     else
                     {
                         inQuotes = !inQuotes;
                     }
                 }
-                else if (c == ',' && !inQuotes)
+                else if (value == ',' && !inQuotes)
                 {
-                    yield return sb.ToString();
-                    sb.Clear();
+                    yield return stringBuilder.ToString();
+                    stringBuilder.Clear();
                 }
                 else
                 {
-                    sb.Append(c);
+                    stringBuilder.Append(value);
                 }
             }
-            yield return sb.ToString();
+            yield return stringBuilder.ToString();
         }
         
         private static string Pad(string s, int width)     => s.Length >= width ? s[..width] : s + new string(' ', width - s.Length);

@@ -7,13 +7,11 @@ public class Player
     public int NumberOfGames { get; private set; } 
     
     private int _numberOfGuesses;
-    
 
     public Player(string name, int guesses)
     {
         Name = name;
         NumberOfGames = 1;
-
         _numberOfGuesses = guesses;
     }
 
@@ -28,4 +26,3 @@ public class Player
         return (double)_numberOfGuesses / NumberOfGames;
     }
 }
-

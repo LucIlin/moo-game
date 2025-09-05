@@ -17,7 +17,7 @@ public class GameController : IGameController
     {
         _game = game;
         _io = inputOutput;
-        _scoreboard = new Scoreboard();
+        _scoreboard = new Scoreboard(inputOutput);
         _player = player;
     }
 
