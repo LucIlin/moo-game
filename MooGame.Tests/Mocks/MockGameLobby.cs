@@ -1,31 +1,27 @@
 ﻿using MooGame.App.Helper;
 using MooGame.App.Interfaces;
+using MooGame.App.Model;
 
 namespace MooGame.Tests.Mocks;
 
 internal class MockGameLobby : IGameLobby
 {
     private readonly IUserInputHandler _io;
-    private readonly IGameFactory _gameFactory;
+    public Player LastCreatedPlayer { get; private set; }
     public IGameController? LastReturnedController { get; private set; }
-    public MockGameLobby(IUserInputHandler io, IGameFactory gameFactory)
+    public MockGameLobby(IUserInputHandler io)
     {
         _io = io;
-        _gameFactory = gameFactory;
     }
-    public void CreatePlayer()
+    public Player CreatePlayer()
     {
-        _io.WriteOutput("DUMMY player created");
+        LastCreatedPlayer = new Player("DUMMY", 1);
+        return LastCreatedPlayer;
     }
 
-    public IGameController SelectGame()
+    public IGameController InitializeGame(Player player)
     {
         LastReturnedController = new MockGameController(_io);
         return LastReturnedController;
-    }
-
-    public IGameController InitializeGame()
-    {
-        throw new NotImplementedException();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MooGame.App.Controller;
 using MooGame.App.Helper;
+using MooGame.App.Model;
 using MooGame.Tests.Mocks;
 
 namespace MooGame.Tests.Tests
@@ -14,10 +15,11 @@ namespace MooGame.Tests.Tests
         public void Test_PlayGame_CorrectGuess_ThenExitGame()
         {
             //Arrange
-            string[] userInputs = { "1234", "n" };
+            string[] userInputs = { "1234", "n", "n"};
             var userIO = MockHelpers.CreateUserInputHandler(userInputs);
             var game = MockHelpers.CreateMockGame("1234");
-            var controller = new GameController(game, userIO);
+            var player = new Player("alex", 1);
+            var controller = new GameController(game, userIO, player);
             //Act
             controller.PlayGame();
 
@@ -26,28 +28,39 @@ namespace MooGame.Tests.Tests
         }
 
         [DataTestMethod]
+        [DoNotParallelize]
         [TestCategory("Status:Done")]
         [TestCategory("Component:GameController")]
         [DataRow("INSTRUCTIONS")]
-        [DataRow("Continue? y/n")]
+        [DataRow("RESULT DUMMY")]
         [DataRow("Correct, it took 1 guesses")]
-        public void Test_PlayGame_OutputsAreCorrect(string output)
+        [DataRow("Would you like to see the scoreboard? (y/n)")]
+        [DataRow("Would you like to play again? (y/n)")]
+        public void Test_PlayGame_OutputsAreCorrect(string expectedOutput) //Fick hjälp av ai att lösa det här då Scoreboard är hårdkopplat till gamecontroller
         {
-            //Arrange
-            var userInputs = new Queue<string>(new[] { "1234", "n" });
-            var io = new MockIO(userInputs);
-            var userInputHandler = new UserInputHandler(io);
-            var game = MockHelpers.CreateMockGame("1234");
-            var controller = new GameController(game, userInputHandler);
+            var originalCwd = Environment.CurrentDirectory;
+            var tempCwd = Path.Combine(Path.GetTempPath(), "MooGameTests", Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(tempCwd);
+            Environment.CurrentDirectory = tempCwd; 
 
-            //Act
-            controller.PlayGame();
+            try
+            {
+                var io = new MockIO(new Queue<string>(new[] { "1234", "n", "n" }));
+                var userInputHandler = new UserInputHandler(io);
+                var game = MockHelpers.CreateMockGame("1234");
+                var player = new Player("alex", 1);
+                var controller = new GameController(game, userInputHandler, player);
 
-            //Assert
-            Assert.IsTrue(io.Outputs.Any(o => o.Contains(output)));
-            Assert.IsTrue(io.Outputs.Any(o => o.Contains(output)));
-            Assert.IsTrue(io.Outputs.Any(o => o.Contains(output)));
+                controller.PlayGame();
+
+                Assert.IsTrue(io.Outputs.Any(o => o.Contains(expectedOutput)), $"Missing output: {expectedOutput}");
+            }
+            finally
+            {
+                Environment.CurrentDirectory = originalCwd;
+            }
         }
+
 
         [TestMethod]
         [TestCategory("Status:Done")]
@@ -55,10 +68,11 @@ namespace MooGame.Tests.Tests
         public void Test_PlayGame_CorrectNumberOfGuesses()
         {
             //Arrange
-            string[] userInputs = { "1235", "1234", "n" };
+            string[] userInputs = { "1235", "1234", "n", "n" };
             var userIO = MockHelpers.CreateUserInputHandler(userInputs);
             var game = MockHelpers.CreateMooGame("1234");
-            var controller = new GameController(game, userIO);
+            var player = new Player("alex", 1);
+            var controller = new GameController(game, userIO, player);
             var expectedGuessCount = 2;
 
             //Act
@@ -75,10 +89,11 @@ namespace MooGame.Tests.Tests
         public void PlayGame_InvalidInputs_DoNotCount()
         {
             //Arrange
-            var inputs = new[] { "x", "12", "abcd", "1234", "n" };
+            var inputs = new[] { "x", "12", "abcd", "1234", "n", "n" };
             var userIO = MockHelpers.CreateUserInputHandler(inputs);
             var game = MockHelpers.CreateMockGame("1234");
-            var controller = new GameController(game, userIO);
+            var player = new Player("alex", 1);
+            var controller = new GameController(game, userIO, player);
             var expectedGuessCount = 1;
 
             //Act
@@ -92,13 +107,14 @@ namespace MooGame.Tests.Tests
         [TestMethod]
         [TestCategory("Status:Done")]
         [TestCategory("Component:GameController")]
-        public void PlayGame_TwoRounds_WhenYThenN()
+        public void PlayGame_TwoRounds_FirstYThenNo()
         {   
             //Arrange
-            var inputs = new[] { "1234", "y", "1234", "n" };
+            var inputs = new[] { "1234", "n", "y", "1234", "n", "n" };
             var userIO = MockHelpers.CreateUserInputHandler(inputs);
             MockGame game = MockHelpers.CreateMockGame("1234");
-            var controller = new GameController(game, userIO);
+            var player = new Player("alex", 1);
+            var controller = new GameController(game, userIO, player);
             var expectedStartCount = 2;
 
             //Act

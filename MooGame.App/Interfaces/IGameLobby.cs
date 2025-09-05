@@ -4,8 +4,7 @@ namespace MooGame.App.Interfaces
 {
     public interface IGameLobby
     {
-        public void CreatePlayer();
-        public IGameController SelectGame();
-        public IGameController InitializeGame();
+        public Player CreatePlayer();
+        public IGameController InitializeGame(Player player);
     }
 }

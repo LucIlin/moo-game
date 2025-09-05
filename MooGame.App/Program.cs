@@ -15,7 +15,6 @@ public class Program
         {
             
             IUserInputHandler userInputHandler = new UserInputHandler(io);
-            
             IGameFactory gameFactory = new GameFactory(userInputHandler);
             var app = new AppController(gameFactory);
 

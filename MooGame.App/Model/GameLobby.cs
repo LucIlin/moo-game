@@ -19,7 +19,7 @@ namespace MooGame.App.Model
             _gameFactory = gameFactory;
         }
 
-        public IGameController SelectGame()
+        public IGameController InitializeGame(Player player)
         {
             _io.WriteOutput("Please select game:\n1. MooGame\n2. Close Application");
             string input = _io.GetInput();
@@ -27,24 +27,19 @@ namespace MooGame.App.Model
             if (input != "1")
                 throw new Exception("Game will now close");
 
-            return _gameFactory.CreateGame(_player);
+            return _gameFactory.CreateGame(player);
         }
 
-        public IGameController InitializeGame()
-        {
-            CreatePlayer();
-            return SelectGame();
-        }
-
-        public void CreatePlayer()
+        public Player CreatePlayer()
         {
             AskPlayerForName();
             string playerAnswer = _io.GetInput();
             _player = new Player(playerAnswer, 1);
             _io.WriteOutput($"Hello there, {_player.Name}");
-
+            return _player;
         }
         private void AskPlayerForName() => _io.WriteOutput("Enter your user name:");
-      
+
+       
     }
 }
