@@ -29,7 +29,7 @@ namespace MooGame.Tests.Tests
 
         [DataTestMethod]
         [DoNotParallelize]
-        [TestCategory("Status:Not Done")]
+        [TestCategory("Status:Done")]
         [TestCategory("Component:GameController")]
         [DataRow("INSTRUCTIONS")]
         [DataRow("RESULT DUMMY")]
