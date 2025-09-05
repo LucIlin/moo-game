@@ -12,7 +12,10 @@ public class GameFactory : IGameFactory
     {
         UserInput = userInput;
     }
-
+    public IGameLobby CreateGameLobby()
+    {
+        return new GameLobby(UserInput, this);
+    }
     public IGameController CreateGame()
     {
         var numberGenerator = new MooUniqueNumberGenerator();
