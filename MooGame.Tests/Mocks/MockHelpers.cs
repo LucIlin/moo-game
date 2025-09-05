@@ -4,7 +4,7 @@ using MooGame.App.Model;
 
 namespace MooGame.Tests.Mocks;
 
-public static class MockHelpers
+internal static class MockHelpers
 {
     public static IUserInputHandler CreateUserInputHandler(string[] inputs)
     {

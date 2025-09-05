@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace MooGame.Tests.Mocks
 {
-    public class MockGame : IGame
+    internal class MockGame : IGame
     {
         public int StartRoundCalls { get; private set; }
         public int GuessCount { get; private set; }
