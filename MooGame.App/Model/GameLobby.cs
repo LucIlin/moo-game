@@ -10,7 +10,7 @@ namespace MooGame.App.Model
 {
     public class GameLobby : IGameLobby
     {
-        private PlayerData? _playerData;
+        private Player? _playerData;
         private readonly IUserInputHandler _io;
         private IGameFactory _gameFactory;
         public GameLobby(IUserInputHandler io, IGameFactory gameFactory) 
@@ -34,7 +34,7 @@ namespace MooGame.App.Model
         {
             AskPlayerForName();
             string playerAnswer = _io.GetInput();
-            _playerData = new PlayerData(playerAnswer, 1);
+            _playerData = new Player(playerAnswer, 1);
             _io.WriteOutput($"Hello there, {_playerData.Name}");
 
         }

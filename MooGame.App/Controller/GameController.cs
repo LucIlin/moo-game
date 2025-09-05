@@ -8,7 +8,7 @@ namespace MooGame.App.Controller;
 public class GameController : IGameController
 {
     private readonly IGame _game;
-
+    private readonly Scoreboard _scoreboard;
     private readonly IUserInputHandler _io;
 
     private bool isRunning = true;
@@ -16,6 +16,7 @@ public class GameController : IGameController
     {
         _game = game;
         _io = inputOutput;
+        _scoreboard = new Scoreboard();
     }
 
     public void PlayGame()
@@ -36,7 +37,14 @@ public class GameController : IGameController
 
                     _io.WriteOutput(ShowPlayerResult(result));
                 }
-                ShowPlayerTheResult(_game.GuessCount); //Kommer finnas en Scoreboard här som lucas fixar
+                ShowPlayerTheResult(_game.GuessCount);
+                
+                
+
+                if (_io.GetYesNo("Would you like to see the scoreboard?"))
+                {
+                    _scoreboard.Print();
+                }
 
                 string playerAnswer = GetContinueAnswer(); //kommer försvinna, lucas tar det
 
