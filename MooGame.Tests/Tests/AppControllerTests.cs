@@ -12,54 +12,44 @@ public sealed class AppControllerTests
 {
     [TestMethod]
     [TestCategory("Status:Done")]
-    public void Test_RunApplication_CorrectOutputsFromVoidMethodsInside() 
+    public void Test_RunApplication_CreatePlayer_ReturnsDummyPlayer()
     {
-        //Arrange
-        string[] inputs = { "alex", "1", "1234", "n" };
-        var userInputs = new Queue<string>(inputs);
-        var io = new MockIO(userInputs);
-
+        // Arrange
+        var inputs = new[] { "alex", "1", "1234", "n" };
+        var io = new MockIO(new Queue<string>(inputs));
         var userInputHandler = new UserInputHandler(io);
-
         var gameFactory = new MockGameFactory(userInputHandler);
-
         var app = new AppController(gameFactory);
 
-        //Act
+        // Act
         app.RunApplication();
+        var lobby = (MockGameLobby)gameFactory.LastCreatedLobby;
+        var player = lobby.LastCreatedPlayer;
 
-        var expectedOutputs = new[] { "DUMMY player created", "DUMMY game is played" };
-        var actualOutputs = io.Outputs.ToArray();
-
-        //Assert
-        CollectionAssert.AreEqual(expectedOutputs, actualOutputs);
+        // Assert
+        Assert.IsNotNull(player, "CreatePlayer should return a Player.");
+        Assert.AreEqual("DUMMY", player.Name, "Player name should be DUMMY.");
     }
 
     [TestMethod]
     [TestCategory("Status:Done")]
-    public void Test_RunApplication_SelectGameReturnsCorrectController()
+    public void Test_RunApplication_InitializeGame_ReturnsCorrectController_TypeAndInterface()
     {
-        //Arrange
-        string[] inputs = { "alex", "1", "1234", "n" };
-        var userInputs = new Queue<string>(inputs);
-        var io = new MockIO(userInputs);
-
+        // Arrange
+        var inputs = new[] { "alex", "1", "1234", "n", "n" };
+        var io = new MockIO(new Queue<string>(inputs));
         var userInputHandler = new UserInputHandler(io);
-        
         var gameFactory = new MockGameFactory(userInputHandler);
-
         var app = new AppController(gameFactory);
 
-        //Act
+        // Act
         app.RunApplication();
 
-        var actuaLobby = (MockGameLobby)gameFactory.LastCreatedLobby;
-        var actualController = actuaLobby.LastReturnedController;
-
-
-        //Assert
-        Assert.IsNotNull(actualController);
-        Assert.IsInstanceOfType(actualController, typeof(IGameController));
-        Assert.IsInstanceOfType(actualController, typeof(MockGameController));
+        // Assert
+        var lobby = (MockGameLobby)gameFactory.LastCreatedLobby;
+        var controller = lobby.LastReturnedController;
+        Assert.IsNotNull(controller, "InitializeGame should return a controller.");
+        Assert.IsInstanceOfType(controller, typeof(IGameController));
+        Assert.IsInstanceOfType(controller, typeof(MockGameController));
     }
 }
