@@ -14,11 +14,11 @@ internal class MockGameFactory : IGameFactory
     {
         UserInput = userInput;
     }
-    public IGameController CreateGame()
+    public IGameController CreateGame(Player player)
     {
         var mockGen = new MockNumberGenerator("1234");
         var mooGame = new MooGameEngine(mockGen);
-        return new GameController(mooGame, UserInput);
+        return new GameController(mooGame, UserInput, player);
     }
 
     public IGameLobby CreateGameLobby()

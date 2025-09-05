@@ -14,8 +14,7 @@ public class AppController
     }
     public void RunApplication()
     {
-        _gameLobby.CreatePlayer();
-        var gameController = _gameLobby.SelectGame();
+        var gameController = _gameLobby.InitializeGame();
         gameController.PlayGame();
     }
 }

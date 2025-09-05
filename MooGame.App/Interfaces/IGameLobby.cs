@@ -6,5 +6,6 @@ namespace MooGame.App.Interfaces
     {
         public void CreatePlayer();
         public IGameController SelectGame();
+        public IGameController InitializeGame();
     }
 }

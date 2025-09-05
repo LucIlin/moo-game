@@ -12,14 +12,16 @@ public class GameFactory : IGameFactory
     {
         UserInput = userInput;
     }
+    
     public IGameLobby CreateGameLobby()
     {
         return new GameLobby(UserInput, this);
     }
-    public IGameController CreateGame()
+    
+    public IGameController CreateGame(Player player)
     {
         var numberGenerator = new MooUniqueNumberGenerator();
         IGame game = new MooGameEngine(numberGenerator);
-        return new GameController(game, UserInput);
+        return new GameController(game, UserInput, player);
     }
 }
