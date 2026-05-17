@@ -11,7 +11,7 @@ using MooGame.App.Model;
 
 namespace MooGame.App
 {
-    public sealed class Scoreboard
+    public sealed class Scoreboard : IScoreboard
     {
         private readonly string _path;
         private readonly Encoding _encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);

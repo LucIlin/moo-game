@@ -22,6 +22,7 @@ public class GameFactory : IGameFactory
     {
         var numberGenerator = new MooUniqueNumberGenerator();
         IGame game = new MooGameEngine(numberGenerator);
-        return new GameController(game, UserInput, player);
+        Scoreboard scoreboard = new Scoreboard(UserInput);
+        return new GameController(game, UserInput, player, scoreboard);
     }
 }

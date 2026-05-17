@@ -8,16 +8,16 @@ namespace MooGame.App.Controller;
 public class GameController : IGameController
 {
     private readonly IGame _game;
-    private readonly Scoreboard _scoreboard;
+    private readonly IScoreboard _scoreboard;
     private readonly IUserInputHandler _io;
     private readonly Player _player;
 
     bool isRunning = true;
-    public GameController(IGame game, IUserInputHandler inputOutput, Player player)
+    public GameController(IGame game, IUserInputHandler inputOutput, Player player, IScoreboard scoreboard)
     {
         _game = game;
         _io = inputOutput;
-        _scoreboard = new Scoreboard(inputOutput);
+        _scoreboard = scoreboard;
         _player = player;
     }
 
