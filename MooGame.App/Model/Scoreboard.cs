@@ -100,7 +100,6 @@ namespace MooGame.App
             int nameWidth  = Math.Clamp(data.Max(p => p.Name.Length), 8, 22);
             int gamesWidth = Math.Max(5, data.Max(p => p.NumberOfGames.ToString().Length));
             const int avgWidth = 7;
-
             _inputOutput.WriteOutput($"{Pad("#", rankWidth)}  {Pad("Player", nameWidth)}  {PadLeft("Games", gamesWidth)}  {PadLeft("Avg", avgWidth)}");
             _inputOutput.WriteOutput(new string('-', rankWidth + 2 + nameWidth + 2 + gamesWidth + 2 + avgWidth));
 
